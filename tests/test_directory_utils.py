@@ -1,5 +1,6 @@
 import os
 import pytest
+import stat
 import shutil
 from src.directory_utils import create_directory
 
@@ -29,7 +30,13 @@ def test_create_existing_directory(tmp_path):
     with pytest.raises(FileExistsError):
         create_directory(str(existing_dir))
 
-def test_create_directory_invalid_path():
-    """Test creating a directory with an invalid path."""
+def test_create_directory_no_permission(tmp_path):
+    """Test creating a directory without permissions."""
+    # Create a directory and remove write permissions
+    no_perm_dir = tmp_path / "no_perm_dir"
+    no_perm_parent = tmp_path / "no_perm_parent"
+    no_perm_parent.mkdir()
+    no_perm_parent.chmod(0o555)  # Read and execute permissions only
+    
     with pytest.raises(PermissionError):
-        create_directory("/root/forbidden_dir")
+        create_directory(str(no_perm_parent / "test_dir"))
