@@ -11,6 +11,9 @@ def find_longest_common_substring(str1, str2):
     
     Raises:
         TypeError: If inputs are not strings
+    
+    Note:
+        This function is case-sensitive and requires exact character matching.
     """
     # Validate input types
     if not isinstance(str1, str) or not isinstance(str2, str):
@@ -30,7 +33,7 @@ def find_longest_common_substring(str1, str2):
     # Dynamic programming approach to find longest common substring
     for i in range(1, len(str1) + 1):
         for j in range(1, len(str2) + 1):
-            # Strictly check for continuous substring
+            # Strictly check for exact character match (case-sensitive)
             if str1[i-1] == str2[j-1]:
                 # Only consider if previous characters also match
                 matrix[i][j] = matrix[i-1][j-1] + 1
@@ -40,7 +43,5 @@ def find_longest_common_substring(str1, str2):
                     max_length = matrix[i][j]
                     end_index = i
     
-    # Check if the found substring is a continuous substring
-    return (str1[end_index - max_length:end_index] 
-            if max_length > 0 and max_length > 1 
-            else "")
+    # Return the substring only if it meets strict matching criteria
+    return str1[end_index - max_length:end_index] if max_length > 1 else ""
