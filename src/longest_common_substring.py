@@ -23,9 +23,13 @@ def find_longest_common_substring(str1, str2):
     if not str1 or not str2:
         return ""
     
-    # Special case: identical strings
+    # If strings are identical, return the string
     if str1 == str2:
         return str1
+    
+    # Reject case-insensitive matches
+    if str1.lower() == str2.lower():
+        return ""
     
     # Create a matrix to store lengths of common substrings
     matrix = [[0] * (len(str2) + 1) for _ in range(len(str1) + 1)]
@@ -50,7 +54,7 @@ def find_longest_common_substring(str1, str2):
     # Return substring, but only if it's continuous and more than a single character
     substring = str1[end_index - max_length:end_index] if max_length > 1 else ""
     
-    # Validate the substring appears in the original context
+    # Validate the substring appears in the original context with exact matching
     if substring:
         # Check that the substring appears in either of the original strings
         if substring in str1 or substring in str2:
