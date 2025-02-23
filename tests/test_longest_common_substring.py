@@ -32,7 +32,9 @@ def test_multiple_common_substrings():
 
 def test_case_sensitivity():
     """Test case sensitivity of substring matching"""
-    assert find_longest_common_substring("Hello", "hello") == ""
+    assert find_longest_common_substring("Hello", "hello") == ""  # Strict case match
+    assert find_longest_common_substring("Hello", "Hello") == "Hello"  # Exact same case
+    assert find_longest_common_substring("hello", "Hello") == ""  # Case mismatch
 
 def test_invalid_input_types():
     """Test error handling for invalid input types"""
