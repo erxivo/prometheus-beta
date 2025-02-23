@@ -23,6 +23,10 @@ def find_longest_common_substring(str1, str2):
     if not str1 or not str2:
         return ""
     
+    # Special case: No point in continuing if full strings don't match exactly
+    if str1 == str2:
+        return str1
+    
     # Create a matrix to store lengths of common substrings
     matrix = [[0] * (len(str2) + 1) for _ in range(len(str1) + 1)]
     
