@@ -23,7 +23,7 @@ def find_longest_common_substring(str1, str2):
     if not str1 or not str2:
         return ""
     
-    # Special case: full match
+    # Special case: identical strings
     if str1 == str2:
         return str1
     
@@ -32,6 +32,7 @@ def find_longest_common_substring(str1, str2):
     
     # Variables to track the longest substring
     max_length = 0
+    end_index = 0
     
     # Dynamic programming approach to find longest common substring
     for i in range(1, len(str1) + 1):
@@ -41,8 +42,15 @@ def find_longest_common_substring(str1, str2):
                 # Only consider if previous characters also match
                 matrix[i][j] = matrix[i-1][j-1] + 1
                 
-                # Update max length
-                max_length = max(max_length, matrix[i][j])
+                # Update max length and end index if needed
+                if matrix[i][j] > max_length:
+                    max_length = matrix[i][j]
+                    end_index = i
     
-    # Return an empty string if no continuous substring of length > 1 is found
-    return ""
+    # Return substring only between identical strings or empty string
+    substring = str1[end_index - max_length:end_index] if max_length > 0 else ""
+    
+    # Ensure the substring appears in its original context
+    return substring if (substring and 
+                         (str1.find(substring) != -1 or 
+                          str2.find(substring) != -1)) else ""
