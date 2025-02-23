@@ -30,6 +30,7 @@ def find_longest_common_substring(str1, str2):
     # Dynamic programming approach to find longest common substring
     for i in range(1, len(str1) + 1):
         for j in range(1, len(str2) + 1):
+            # Explicitly check exact character match (case-sensitive)
             if str1[i-1] == str2[j-1]:
                 matrix[i][j] = matrix[i-1][j-1] + 1
                 
